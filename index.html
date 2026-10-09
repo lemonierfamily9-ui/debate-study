@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 5: Affirmative Case Construction</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* slate-900 */
+            color: #f8fafc; /* slate-50 */
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, .heading-font {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Nav Tab Styles */
+        .nav-tab {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-tab::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: #f6ad55; /* amber-400 */
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px #f6ad55;
+        }
+        .nav-tab.active {
+            color: #fbd38d; /* amber-200 */
+        }
+        .nav-tab.active::after {
+            width: 100%;
+        }
+
+        /* View Transition */
+        .view-section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .view-section.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Flip Card Base Styles */
+        .flip-card {
+            background-color: transparent;
+            perspective: 1000px;
+            height: 220px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .flip-card-front {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            color: #fbd38d; /* amber-200 */
+        }
+
+        .flip-card-back {
+            background: linear-gradient(145deg, #0f172a, #1e293b);
+            color: #e2e8f0;
+            transform: rotateY(180deg);
+        }
+
+        /* Accordion transition styles */
+        .accordion-content {
+            transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out, padding 0.4s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+
+        .accordion-content.active {
+            opacity: 1;
+        }
+        
+        .accordion-icon {
+            transition: transform 0.4s ease;
+        }
+        
+        .accordion-btn[aria-expanded="true"] .accordion-icon {
+            transform: rotate(180deg);
+        }
+        
+        /* Premium glowing effects */
+        .glow-accent {
+            position: relative;
+        }
+        .glow-accent::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: #f6ad55; /* orange-400 */
+            box-shadow: 0 0 10px #f6ad55;
+            border-radius: 2px;
+        }
+
+        /* Quiz Specific Styles */
+        .quiz-option {
+            transition: all 0.2s ease;
+        }
+        .quiz-option:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            background-color: #334155;
+        }
+        .quiz-option.correct {
+            background-color: #059669; /* emerald-600 */
+            border-color: #34d399; /* emerald-400 */
+            color: white;
+        }
+        .quiz-option.wrong {
+            background-color: #e11d48; /* rose-600 */
+            border-color: #fb7185; /* rose-400 */
+            color: white;
+        }
+        .quiz-option:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body class="min-h-screen selection:bg-amber-500/30 selection:text-amber-200 flex flex-col">
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 w-full z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-center space-x-8">
+            <button id="tab-study" class="nav-tab active text-lg font-medium text-slate-300 hover:text-white tracking-wide" onclick="switchTab('study')">Study Guide</button>
+            <button id="tab-quiz" class="nav-tab text-lg font-medium text-slate-300 hover:text-white tracking-wide" onclick="switchTab('quiz')">Quiz Game</button>
+        </div>
+    </nav>
+
+    <!-- Header / Hero Section -->
+    <header class="relative pt-32 pb-16 px-6 overflow-hidden flex flex-col items-center justify-center text-center shrink-0">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10 mix-blend-overlay pointer-events-none"></div>
+        <div class="absolute top-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent opacity-50"></div>
+        
+        <span class="text-amber-500 uppercase tracking-[0.3em] text-sm font-semibold mb-4 drop-shadow-md">Debate Prep</span>
+        <h1 class="heading-font text-5xl md:text-6xl text-white font-bold mb-6 glow-accent pb-2">Chapter 5</h1>
+        <h2 class="text-2xl md:text-3xl font-light text-slate-300 max-w-2xl mt-4">Affirmative Case Construction</h2>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl mx-auto px-6 pb-24 w-full">
+        
+        <!-- VIEW: STUDY GUIDE -->
+        <div id="view-study" class="view-section active space-y-24">
+            
+            <section id="definitions">
+                <div class="text-center mb-12">
+                    <h2 class="heading-font text-3xl text-white mb-3">Key Vocabulary</h2>
+                    <p class="text-slate-400 font-light">Hover over the cards to reveal the definitions.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <!-- Cards -->
+                    <div class="flip-card cursor-pointer group">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front"><h3 class="heading-font text-2xl font-semibold">Criterion</h3></div>
+                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">The criterion helps us have a better grasp on the value. It is a helpful measuring stick for the value.</p></div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card cursor-pointer group">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front"><h3 class="heading-font text-2xl font-semibold">Contention</h3></div>
+                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">A short, yet firm statement that directly relates and supports your position in the round.</p></div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card cursor-pointer group">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front"><h3 class="heading-font text-2xl font-semibold">Introduction</h3></div>
+                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">A short introduction of the proposed ideology and a personal outlook on the resolution (the hook).</p></div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card cursor-pointer group">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front"><h3 class="heading-font text-2xl font-semibold text-center leading-tight">Value<br>Justification</h3></div>
+                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">The reasoning behind the choice of your value, expanding on its definition and linking it to the resolution.</p></div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card cursor-pointer group">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front"><h3 class="heading-font text-2xl font-semibold text-center leading-tight">Criterion<br>Justification</h3></div>
+                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">Explains why your criterion is an appropriate measuring stick of the value.</p></div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card cursor-pointer group">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front"><h3 class="heading-font text-2xl font-semibold text-center leading-tight">Case<br>Structure</h3></div>
+                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">A configuration that helps define and defend a position; a simple outline for developing ideology.</p></div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card cursor-pointer group">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front"><h3 class="heading-font text-2xl font-semibold text-center leading-tight">Alternate<br>Case Structure</h3></div>
+                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">Varying ways to present a case structure, typically reserved for use by more advanced debaters.</p></div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card cursor-pointer group">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front"><h3 class="heading-font text-2xl font-semibold">Flowing</h3></div>
+                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">A note-taking system that debaters use to follow argumentation throughout the round.</p></div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card cursor-pointer group">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front"><h3 class="heading-font text-2xl font-semibold">NC</h3></div>
+                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">Negative Constructive speech.</p></div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card cursor-pointer group">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front"><h3 class="heading-font text-2xl font-semibold">2AR</h3></div>
+                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">Second Affirmative Rebuttal speech.</p></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="questions">
+                <div class="text-center mb-12">
+                    <h2 class="heading-font text-3xl text-white mb-3">Chapter Review Questions</h2>
+                    <p class="text-slate-400 font-light">Click on a question to reveal the correct answer.</p>
+                </div>
+
+                <div class="max-w-4xl mx-auto rounded-2xl overflow-hidden bg-slate-800/40 border border-slate-700/50 shadow-2xl backdrop-blur-sm divide-y divide-slate-700/50">
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-700/30 transition-colors" aria-expanded="false">
+                            <span class="font-medium text-slate-100 pr-6">1. What is the purpose of utilizing a case structure?</span>
+                            <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content bg-slate-800/80 px-6">
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">It is essential to protect the new debater from unforeseen problems and ensures balance, strength, and focus on essential areas of the debate.</div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-700/30 transition-colors" aria-expanded="false">
+                            <span class="font-medium text-slate-100 pr-6">2. What is the purpose of the criterion justification?</span>
+                            <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content bg-slate-800/80 px-6">
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">To explain why your criterion is an appropriate measuring stick of the value and provide details on why the value has been appropriately narrowed down.</div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-700/30 transition-colors" aria-expanded="false">
+                            <span class="font-medium text-slate-100 pr-6">3. When should the resolution be stated in the debate round verbatim?</span>
+                            <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content bg-slate-800/80 px-6">
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">The resolution should be mentioned close to the beginning of every constructive speech.</div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-700/30 transition-colors" aria-expanded="false">
+                            <span class="font-medium text-slate-100 pr-6">4. How should a tag line be worded?</span>
+                            <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content bg-slate-800/80 px-6">
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">It should be short and to the point, acting as a pre-summary, and should use open phrasing (like 'can be') rather than absolute words (like 'never' or 'always').</div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-700/30 transition-colors" aria-expanded="false">
+                            <span class="font-medium text-slate-100 pr-6">5. What are the 5 columns on a flow chart?</span>
+                            <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content bg-slate-800/80 px-6">
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">AC (Affirmative Constructive), NC (Negative Constructive), 1AR (First Affirmative Rebuttal), NR (Negative Rebuttal), 2AR (Second Affirmative Rebuttal).</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- VIEW: QUIZ GAME -->
+        <div id="view-quiz" class="view-section">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-10">
+                    <h2 class="heading-font text-3xl text-white mb-2">Knowledge Check</h2>
+                    <p class="text-slate-400 font-light">Test your mastery of Chapter 5 to secure a top grade.</p>
+                </div>
+
+                <!-- Quiz Container -->
+                <div class="bg-slate-800/60 border border-slate-700 rounded-2xl shadow-2xl p-8 md:p-10 backdrop-blur-sm">
+                    
+                    <!-- Quiz Progress Tracker -->
+                    <div id="quiz-header" class="flex justify-between items-center mb-8 pb-4 border-b border-slate-700/50">
+                        <span id="question-tracker" class="text-amber-500 font-semibold tracking-wide">Question 1 / 7</span>
+                        <span id="score-tracker" class="text-slate-300 font-medium tracking-wide">Score: 0</span>
+                    </div>
+
+                    <!-- Question Area -->
+                    <div id="quiz-body">
+                        <h3 id="question-text" class="text-xl md:text-2xl font-medium text-white mb-8 leading-relaxed text-center"></h3>
+                        
+                        <!-- Options Grid -->
+                        <div id="options-container" class="grid grid-cols-1 gap-4 mb-8">
+                            <!-- Buttons dynamically injected here -->
+                        </div>
+
+                        <!-- Action Button (Hidden until answered) -->
+                        <div class="flex justify-center mt-6">
+                            <button id="next-btn" class="hidden px-8 py-3 bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold rounded-lg transition-colors shadow-lg hover:shadow-amber-500/20" onclick="nextQuestion()">Next Question &rarr;</button>
+                        </div>
+                    </div>
+
+                    <!-- Results Screen (Hidden initially) -->
+                    <div id="quiz-results" class="hidden text-center py-8">
+                        <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-slate-700 mb-6 border-4 border-amber-500">
+                            <span id="final-score-text" class="text-3xl font-bold text-white"></span>
+                        </div>
+                        <h3 class="heading-font text-3xl text-white mb-4">Quiz Complete!</h3>
+                        <p id="grade-message" class="text-lg text-slate-300 mb-8 max-w-lg mx-auto"></p>
+                        <button onclick="restartQuiz()" class="px-8 py-3 bg-slate-700 hover:bg-slate-600 border border-slate-500 text-white font-medium rounded-lg transition-colors">
+                            Retake Quiz
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="border-t border-slate-800 mt-auto py-8 text-center text-slate-500 text-sm">
+        <p>Lincoln Douglas Value Debate &mdash; Chapter 5 Study Materials</p>
+    </footer>
+
+    <script>
+        // --- Navigation Logic ---
+        function switchTab(tabName) {
+            // Update buttons
+            document.getElementById('tab-study').classList.remove('active');
+            document.getElementById('tab-quiz').classList.remove('active');
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+
+            // Update views
+            const studyView = document.getElementById('view-study');
+            const quizView = document.getElementById('view-quiz');
+            
+            if (tabName === 'study') {
+                quizView.style.opacity = '0';
+                setTimeout(() => {
+                    quizView.classList.remove('active');
+                    studyView.classList.add('active');
+                    // Small delay to trigger fade in
+                    setTimeout(() => studyView.style.opacity = '1', 50);
+                }, 300); // match transition duration
+            } else {
+                studyView.style.opacity = '0';
+                setTimeout(() => {
+                    studyView.classList.remove('active');
+                    quizView.classList.add('active');
+                    setTimeout(() => quizView.style.opacity = '1', 50);
+                }, 300);
+            }
+        }
+
+        // --- Accordion Logic ---
+        const accordionBtns = document.querySelectorAll('.accordion-btn');
+        accordionBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                this.setAttribute('aria-expanded', !isExpanded);
+                const content = this.nextElementSibling;
+                if (!isExpanded) {
+                    content.classList.add('active');
+                    content.style.maxHeight = content.scrollHeight + "px";
+                } else {
+                    content.classList.remove('active');
+                    content.style.maxHeight = null;
+                }
+            });
+        });
+
+        // --- Quiz Game Logic ---
+        const quizData = [
+            {
+                question: "How many columns are there on a flow chart?",
+                options: ["3 columns", "4 columns", "5 columns", "6 columns"],
+                correctAnswer: 2 // index 2 -> "5 columns"
+            },
+            {
+                question: "What are the three observations to improve contentions?",
+                options: ["Value, Criterion, Justification", "Tag Line, Content, Order", "Introduction, Body, Conclusion", "Definitions, Resolution, Argument"],
+                correctAnswer: 1
+            },
+            {
+                question: "Who flows in a debate round?",
+                options: ["Only the Judge", "Only the Affirmative and Negative", "Affirmative, Negative, and the Judge", "The audience only"],
+                correctAnswer: 2
+            },
+            {
+                question: "What is the purpose of flowing?",
+                options: ["A note-taking system to follow argumentation", "A method to trick the opponent", "A way to pace your speech", "A grading rubric for the judge"],
+                correctAnswer: 0
+            },
+            {
+                question: "Are alternate case structures illegal?",
+                options: ["Yes, they violate LD rules", "No, but they are reserved for advanced debaters", "Yes, unless the judge approves", "No, they are mandatory"],
+                correctAnswer: 1
+            },
+            {
+                question: "When should the resolution be stated in the debate round verbatim?",
+                options: ["During cross-examination", "At the very end of the debate", "Close to the beginning of every constructive speech", "Only if your opponent asks"],
+                correctAnswer: 2
+            },
+            {
+                question: "What is a 'Tag Line'?",
+                options: ["A joke to break the ice", "The title of your case", "An absolute rule you must follow", "A short definitive statement acting as a pre-summary"],
+                correctAnswer: 3
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const questionTrackerEl = document.getElementById('question-tracker');
+        const scoreTrackerEl = document.getElementById('score-tracker');
+        const questionTextEl = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const nextBtn = document.getElementById('next-btn');
+        
+        const quizHeader = document.getElementById('quiz-header');
+        const quizBody = document.getElementById('quiz-body');
+        const quizResults = document.getElementById('quiz-results');
+
+        function initQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            quizHeader.classList.remove('hidden');
+            quizBody.classList.remove('hidden');
+            quizResults.classList.add('hidden');
+            quizHeader.style.display = 'flex';
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const currentQuestion = quizData[currentQuestionIndex];
+            
+            questionTrackerEl.textContent = `Question ${currentQuestionIndex + 1} / ${quizData.length}`;
+            scoreTrackerEl.textContent = `Score: ${score}`;
+            questionTextEl.textContent = currentQuestion.question;
+            
+            optionsContainer.innerHTML = ''; // Clear previous options
+            nextBtn.classList.add('hidden'); // Hide next button
+
+            currentQuestion.options.forEach((optionText, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-option w-full text-left px-6 py-4 rounded-xl border border-slate-600 bg-slate-700/50 text-slate-200 font-medium focus:outline-none';
+                btn.textContent = optionText;
+                btn.onclick = () => selectAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectAnswer(selectedIndex, selectedBtn) {
+            const currentQuestion = quizData[currentQuestionIndex];
+            const allBtns = optionsContainer.querySelectorAll('button');
+            
+            // Disable all buttons so user can't change answer
+            allBtns.forEach(btn => btn.disabled = true);
+
+            if (selectedIndex === currentQuestion.correctAnswer) {
+                // Correct!
+                selectedBtn.classList.add('correct');
+                score++;
+                scoreTrackerEl.textContent = `Score: ${score}`;
+            } else {
+                // Wrong!
+                selectedBtn.classList.add('wrong');
+                // Highlight correct one
+                allBtns[currentQuestion.correctAnswer].classList.add('correct');
+            }
+
+            // Show next button
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            quizHeader.style.display = 'none';
+            quizBody.classList.add('hidden');
+            quizResults.classList.remove('hidden');
+
+            const percent = Math.round((score / quizData.length) * 100);
+            document.getElementById('final-score-text').textContent = `${percent}%`;
+
+            const messageEl = document.getElementById('grade-message');
+            if (percent === 100) {
+                messageEl.innerHTML = "<strong>Perfect Score!</strong> You are going to crush this chapter and get that super good grade. Fantastic job!";
+            } else if (percent >= 80) {
+                messageEl.innerHTML = "<strong>Great Work!</strong> You have a very strong understanding of case construction. Review your definitions one more time to guarantee that top grade.";
+            } else {
+                messageEl.innerHTML = "<strong>Keep Studying!</strong> You're on the right track, but reviewing the Study Guide tab a bit more will help solidify these concepts.";
+            }
+        }
+
+        function restartQuiz() {
+            initQuiz();
+        }
+
+        // Initialize quiz on load
+        window.onload = () => {
+            initQuiz();
+        };
+
+    </script>
+</body>
+</html>
