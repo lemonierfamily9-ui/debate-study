@@ -23,7 +23,6 @@
             font-family: 'Cinzel', serif;
         }
 
-        /* Nav Tab Styles */
         .nav-tab {
             position: relative;
             transition: color 0.3s ease;
@@ -47,7 +46,6 @@
             width: 100%;
         }
 
-        /* View Transition */
         .view-section {
             display: none;
             opacity: 0;
@@ -58,11 +56,10 @@
             opacity: 1;
         }
 
-        /* Flip Card Base Styles */
         .flip-card {
             background-color: transparent;
             perspective: 1000px;
-            height: 220px;
+            height: 280px; /* Increased height for longer definitions */
         }
 
         .flip-card-inner {
@@ -103,9 +100,9 @@
             background: linear-gradient(145deg, #0f172a, #1e293b);
             color: #e2e8f0;
             transform: rotateY(180deg);
+            overflow-y: auto; /* Allows scrolling for very long text on small screens */
         }
 
-        /* Accordion transition styles */
         .accordion-content {
             transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out, padding 0.4s ease-in-out;
             max-height: 0;
@@ -125,7 +122,6 @@
             transform: rotate(180deg);
         }
         
-        /* Premium glowing effects */
         .glow-accent {
             position: relative;
         }
@@ -142,7 +138,6 @@
             border-radius: 2px;
         }
 
-        /* Quiz Specific Styles */
         .quiz-option {
             transition: all 0.2s ease;
         }
@@ -196,32 +191,36 @@
             <section id="definitions">
                 <div class="text-center mb-12">
                     <h2 class="heading-font text-3xl text-white mb-3">Key Vocabulary</h2>
-                    <p class="text-slate-400 font-light">Hover over the cards to reveal the definitions.</p>
+                    <p class="text-slate-400 font-light">Hover over the cards to reveal the detailed definitions.</p>
                 </div>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                    <!-- Cards -->
+                    
+                    <!-- Card 1 -->
                     <div class="flip-card cursor-pointer group">
                         <div class="flip-card-inner">
                             <div class="flip-card-front"><h3 class="heading-font text-2xl font-semibold">Criterion</h3></div>
-                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">The criterion helps us have a better grasp on the value. It is a helpful measuring stick for the value.</p></div>
+                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">A helpful 'measuring stick' for the value; a uniform expectation to see how much of the value we are achieving.</p></div>
                         </div>
                     </div>
 
+                    <!-- Card 2 -->
                     <div class="flip-card cursor-pointer group">
                         <div class="flip-card-inner">
                             <div class="flip-card-front"><h3 class="heading-font text-2xl font-semibold">Contention</h3></div>
-                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">A short, yet firm statement that directly relates and supports your position in the round.</p></div>
+                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">A short, yet firm statement that directly relates and supports your position in the round, derived from your value and criterion.</p></div>
                         </div>
                     </div>
 
+                    <!-- Card 3 -->
                     <div class="flip-card cursor-pointer group">
                         <div class="flip-card-inner">
                             <div class="flip-card-front"><h3 class="heading-font text-2xl font-semibold">Introduction</h3></div>
-                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">A short introduction of the proposed ideology and a personal outlook on the resolution (the hook).</p></div>
+                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">The beginning of the case structure (the 'hook'); a short introduction of the proposed ideology and a personal outlook on the resolution.</p></div>
                         </div>
                     </div>
 
+                    <!-- Card 4 -->
                     <div class="flip-card cursor-pointer group">
                         <div class="flip-card-inner">
                             <div class="flip-card-front"><h3 class="heading-font text-2xl font-semibold text-center leading-tight">Value<br>Justification</h3></div>
@@ -229,27 +228,31 @@
                         </div>
                     </div>
 
+                    <!-- Card 5 -->
                     <div class="flip-card cursor-pointer group">
                         <div class="flip-card-inner">
                             <div class="flip-card-front"><h3 class="heading-font text-2xl font-semibold text-center leading-tight">Criterion<br>Justification</h3></div>
-                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">Explains why your criterion is an appropriate measuring stick of the value.</p></div>
+                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">A few sentences to explain why the criterion is an appropriate measuring stick of the value, narrowing it down.</p></div>
                         </div>
                     </div>
 
+                    <!-- Card 6 -->
                     <div class="flip-card cursor-pointer group">
                         <div class="flip-card-inner">
                             <div class="flip-card-front"><h3 class="heading-font text-2xl font-semibold text-center leading-tight">Case<br>Structure</h3></div>
-                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">A configuration that helps define and defend a position; a simple outline for developing ideology.</p></div>
+                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">A predetermined configuration that helps define and defend a debater's position, ensuring balance and focus.</p></div>
                         </div>
                     </div>
 
+                    <!-- Card 7 -->
                     <div class="flip-card cursor-pointer group">
                         <div class="flip-card-inner">
                             <div class="flip-card-front"><h3 class="heading-font text-2xl font-semibold text-center leading-tight">Alternate<br>Case Structure</h3></div>
-                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">Varying ways to present a case structure, typically reserved for use by more advanced debaters.</p></div>
+                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">Varying ways to present a case structure that have their own unique focus but still successfully accomplish their objectives.</p></div>
                         </div>
                     </div>
 
+                    <!-- Card 8 -->
                     <div class="flip-card cursor-pointer group">
                         <div class="flip-card-inner">
                             <div class="flip-card-front"><h3 class="heading-font text-2xl font-semibold">Flowing</h3></div>
@@ -257,19 +260,22 @@
                         </div>
                     </div>
 
+                    <!-- Card 9 -->
                     <div class="flip-card cursor-pointer group">
                         <div class="flip-card-inner">
                             <div class="flip-card-front"><h3 class="heading-font text-2xl font-semibold">NC</h3></div>
-                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">Negative Constructive speech.</p></div>
+                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">Negative Constructive.</p></div>
                         </div>
                     </div>
 
-                    <div class="flip-card cursor-pointer group">
+                    <!-- Card 10 -->
+                    <div class="flip-card cursor-pointer group lg:col-start-2 xl:col-start-auto">
                         <div class="flip-card-inner">
                             <div class="flip-card-front"><h3 class="heading-font text-2xl font-semibold">2AR</h3></div>
-                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">Second Affirmative Rebuttal speech.</p></div>
+                            <div class="flip-card-back"><p class="text-sm font-light leading-relaxed">Second Affirmative Rebuttal.</p></div>
                         </div>
                     </div>
+
                 </div>
             </section>
 
@@ -287,7 +293,7 @@
                             <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div class="accordion-content bg-slate-800/80 px-6">
-                            <div class="pb-5 text-slate-300 font-light leading-relaxed">It is essential to protect the new debater from unforeseen problems and ensures balance, strength, and focus on essential areas of the debate.</div>
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">To protect the new debater from unforeseen problems, ensure balance/strength/focus, and allow them to present complete, concrete ideas.</div>
                         </div>
                     </div>
 
@@ -297,7 +303,7 @@
                             <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div class="accordion-content bg-slate-800/80 px-6">
-                            <div class="pb-5 text-slate-300 font-light leading-relaxed">To explain why your criterion is an appropriate measuring stick of the value and provide details on why the value has been appropriately narrowed down.</div>
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">To explain why your criterion is an appropriate measuring stick of the value.</div>
                         </div>
                     </div>
 
@@ -307,29 +313,140 @@
                             <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div class="accordion-content bg-slate-800/80 px-6">
-                            <div class="pb-5 text-slate-300 font-light leading-relaxed">The resolution should be mentioned close to the beginning of every constructive speech.</div>
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">Close to the beginning of every constructive speech.</div>
                         </div>
                     </div>
 
                     <div class="accordion-item">
                         <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-700/30 transition-colors" aria-expanded="false">
-                            <span class="font-medium text-slate-100 pr-6">4. How should a tag line be worded?</span>
+                            <span class="font-medium text-slate-100 pr-6">4. If a case did not have a value, what would it be lacking?</span>
                             <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div class="accordion-content bg-slate-800/80 px-6">
-                            <div class="pb-5 text-slate-300 font-light leading-relaxed">It should be short and to the point, acting as a pre-summary, and should use open phrasing (like 'can be') rather than absolute words (like 'never' or 'always').</div>
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">The forefront of the case structure; the 'selling feature' that is automatically assumed once stated.</div>
                         </div>
                     </div>
 
                     <div class="accordion-item">
                         <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-700/30 transition-colors" aria-expanded="false">
-                            <span class="font-medium text-slate-100 pr-6">5. What are the 5 columns on a flow chart?</span>
+                            <span class="font-medium text-slate-100 pr-6">5. How should a tag line be worded?</span>
                             <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div class="accordion-content bg-slate-800/80 px-6">
-                            <div class="pb-5 text-slate-300 font-light leading-relaxed">AC (Affirmative Constructive), NC (Negative Constructive), 1AR (First Affirmative Rebuttal), NR (Negative Rebuttal), 2AR (Second Affirmative Rebuttal).</div>
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">Short and to the point, acting as a pre-summary, using non-absolute terminology like 'can be'.</div>
                         </div>
                     </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-700/30 transition-colors" aria-expanded="false">
+                            <span class="font-medium text-slate-100 pr-6">6. List all the sections of the case structure in the appropriate order.</span>
+                            <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content bg-slate-800/80 px-6">
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">Introduction, Definitions, Value, Value Justification, Criterion, Criterion Justification, Contentions, Conclusion.</div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-700/30 transition-colors" aria-expanded="false">
+                            <span class="font-medium text-slate-100 pr-6">7. Are alternate case structures illegal? Explain.</span>
+                            <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content bg-slate-800/80 px-6">
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">No, it is not illegal or inappropriate, but they are typically reserved for more advanced debaters.</div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-700/30 transition-colors" aria-expanded="false">
+                            <span class="font-medium text-slate-100 pr-6">8. Is it possible for a solid case not to relate to the resolution? Explain.</span>
+                            <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content bg-slate-800/80 px-6">
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">No. The resolution is the center of the debate and every aspect of the case must be inseparably linked to it.</div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-700/30 transition-colors" aria-expanded="false">
+                            <span class="font-medium text-slate-100 pr-6">9. What three observations will improve the contentions of a case?</span>
+                            <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content bg-slate-800/80 px-6">
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">The Tag Line, The Content, and The Order.</div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-700/30 transition-colors" aria-expanded="false">
+                            <span class="font-medium text-slate-100 pr-6">10. Further explain these three observations.</span>
+                            <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content bg-slate-800/80 px-6">
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">Tag line: short, no absolutes. Content: logical steps for selecting value/criterion. Order: broad to pointed, expansive to narrow.</div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-700/30 transition-colors" aria-expanded="false">
+                            <span class="font-medium text-slate-100 pr-6">11. What is the purpose of flowing?</span>
+                            <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content bg-slate-800/80 px-6">
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">To provide a basic format for taking notes to remember who said what and when; following argumentation throughout the round.</div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-700/30 transition-colors" aria-expanded="false">
+                            <span class="font-medium text-slate-100 pr-6">12. Who flows in a debate round?</span>
+                            <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content bg-slate-800/80 px-6">
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">Both the affirmative and negative debaters, the judge, and often individuals watching.</div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-700/30 transition-colors" aria-expanded="false">
+                            <span class="font-medium text-slate-100 pr-6">13. How many columns are there on a flow chart?</span>
+                            <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content bg-slate-800/80 px-6">
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">Five columns.</div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-700/30 transition-colors" aria-expanded="false">
+                            <span class="font-medium text-slate-100 pr-6">14. Where do you record the argumentation that relates to the affirmative debater?</span>
+                            <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content bg-slate-800/80 px-6">
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">On the top half of the flow sheet.</div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-700/30 transition-colors" aria-expanded="false">
+                            <span class="font-medium text-slate-100 pr-6">15. What is the basic outline to flow for a constructive speech?</span>
+                            <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content bg-slate-800/80 px-6">
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">Definitions, Value, Criterion, Contentions.</div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-700/30 transition-colors" aria-expanded="false">
+                            <span class="font-medium text-slate-100 pr-6">16. Will you flow every debate round?</span>
+                            <svg class="accordion-icon w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content bg-slate-800/80 px-6">
+                            <div class="pb-5 text-slate-300 font-light leading-relaxed">Yes, it is necessary to follow that line of argumentation from the first speech to the end of the round.</div>
+                        </div>
+                    </div>
+
                 </div>
             </section>
         </div>
@@ -347,7 +464,7 @@
                     
                     <!-- Quiz Progress Tracker -->
                     <div id="quiz-header" class="flex justify-between items-center mb-8 pb-4 border-b border-slate-700/50">
-                        <span id="question-tracker" class="text-amber-500 font-semibold tracking-wide">Question 1 / 7</span>
+                        <span id="question-tracker" class="text-amber-500 font-semibold tracking-wide">Question 1 / 10</span>
                         <span id="score-tracker" class="text-slate-300 font-medium tracking-wide">Score: 0</span>
                     </div>
 
@@ -439,38 +556,53 @@
         const quizData = [
             {
                 question: "How many columns are there on a flow chart?",
-                options: ["3 columns", "4 columns", "5 columns", "6 columns"],
-                correctAnswer: 2 // index 2 -> "5 columns"
+                options: ["Three columns", "Four columns", "Five columns", "Six columns"],
+                correctAnswer: 2 
             },
             {
-                question: "What are the three observations to improve contentions?",
-                options: ["Value, Criterion, Justification", "Tag Line, Content, Order", "Introduction, Body, Conclusion", "Definitions, Resolution, Argument"],
+                question: "What three observations will improve the contentions of a case?",
+                options: ["Definitions, Value, and Criterion", "The Tag Line, The Content, and The Order", "Introduction, Body, and Conclusion", "Research, Evidence, and Logic"],
                 correctAnswer: 1
             },
             {
                 question: "Who flows in a debate round?",
-                options: ["Only the Judge", "Only the Affirmative and Negative", "Affirmative, Negative, and the Judge", "The audience only"],
+                options: ["Only the judge", "Only the debaters", "Both the affirmative and negative debaters, the judge, and often individuals watching", "Only the audience"],
                 correctAnswer: 2
             },
             {
                 question: "What is the purpose of flowing?",
-                options: ["A note-taking system to follow argumentation", "A method to trick the opponent", "A way to pace your speech", "A grading rubric for the judge"],
+                options: ["To provide a basic format for taking notes to remember who said what and when", "To distract the opponent", "To record a grading rubric", "To time the debaters accurately"],
                 correctAnswer: 0
             },
             {
                 question: "Are alternate case structures illegal?",
-                options: ["Yes, they violate LD rules", "No, but they are reserved for advanced debaters", "Yes, unless the judge approves", "No, they are mandatory"],
+                options: ["Yes, they violate standard rules", "No, it is not illegal, but they are typically reserved for more advanced debaters", "Yes, unless the judge explicitly allows it", "No, they are mandatory for all debates"],
                 correctAnswer: 1
             },
             {
                 question: "When should the resolution be stated in the debate round verbatim?",
-                options: ["During cross-examination", "At the very end of the debate", "Close to the beginning of every constructive speech", "Only if your opponent asks"],
+                options: ["During the cross-examination only", "At the very end of the debate", "Close to the beginning of every constructive speech", "Only if your opponent forgets to"],
                 correctAnswer: 2
             },
             {
-                question: "What is a 'Tag Line'?",
-                options: ["A joke to break the ice", "The title of your case", "An absolute rule you must follow", "A short definitive statement acting as a pre-summary"],
-                correctAnswer: 3
+                question: "How should a tag line be worded?",
+                options: ["Long and detailed to explain the argument fully", "Using absolute terms like 'never' and 'always'", "Short and to the point, acting as a pre-summary, using non-absolute terminology", "Phrased as a question to the judge"],
+                correctAnswer: 2
+            },
+            {
+                question: "What is a Criterion?",
+                options: ["A helpful 'measuring stick' for the value; a uniform expectation", "A personal outlook on the resolution", "The beginning of the case structure", "A short statement that supports your position"],
+                correctAnswer: 0
+            },
+            {
+                question: "What does 2AR stand for?",
+                options: ["Second Argumentative Reply", "Second Affirmative Rebuttal", "Secondary Affirmative Resolution", "Second Analytical Review"],
+                correctAnswer: 1
+            },
+            {
+                question: "Where do you record the argumentation that relates to the affirmative debater?",
+                options: ["On the bottom half of the flow sheet", "On the top half of the flow sheet", "On the back of the flow sheet", "In a separate notebook"],
+                correctAnswer: 1
             }
         ];
 
